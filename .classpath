@@ -6,6 +6,26 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="/i_ctx.adligo.org">
+		<attributes>
+			<attribute name="without_test_code" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="/i_ctx4jse.adligo.org">
+		<attributes>
+			<attribute name="without_test_code" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="/i_threads.adligo.org">
+		<attributes>
+			<attribute name="without_test_code" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="/ctx.adligo.org">
+		<attributes>
+			<attribute name="without_test_code" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/scott/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-user/2.9.0/d68c92135dca7f9880870fb379ded95b96ac8ad9/gwt-user-2.9.0.jar" sourcepath="C:/Users/scott/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-user/2.9.0/5dc767910b63b76fd9ed036b596d31d405286165/gwt-user-2.9.0-sources.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
@@ -281,6 +301,6 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-8"/>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

@@ -1,5 +1,10 @@
 package org.adligo.gwt_ctx_example.client;
 
+import java.util.function.Supplier;
+
+import org.adligo.ctx.shared.Ctx;
+import org.adligo.ctx.shared.CtxMutant;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -26,12 +31,32 @@ public class App implements EntryPoint {
   private static final String SERVER_ERROR = "An error occurred while "
       + "attempting to contact the server. Please check your network "
       + "connection and try again.";
+  private final Ctx ctx;
 
+  native void println( String message) /*-{
+  console.log( "me:" + message );
+}-*/;
+  
+  public App() {
+    println("In App()");
+    CtxMutant cm = new CtxMutant();
+    cm.add("name", "App");
 
+    cm.addCreator(String.class.getName(),
+      //lambda's work fine in GWT now cool, first time I have checked,
+      // however the complier will cast them to Object, on occasion, which
+      // gets weird
+      () -> { return "Supplier Check!"; });
+        
+
+    ctx = new Ctx(cm);
+    System.out.println("Exit App()");
+  }
   /**
    * This is the entry point method.
    */
   public void onModuleLoad() {
+    ctx.print("in onModuleLoad");
     final Button sendButton = new Button("Send");
     final TextBox nameField = new TextBox();
     nameField.setText("GWT User");
@@ -51,8 +76,9 @@ public class App implements EntryPoint {
     nameField.selectAll();
 
     // Create the popup dialog box
+    ctx.print("setting up dialogBox");
     final DialogBox dialogBox = new DialogBox();
-    dialogBox.setText("Remote Procedure Call");
+    dialogBox.setText("Dialog Box");
     dialogBox.setAnimationEnabled(true);
     final Button closeButton = new Button("Close");
     // We can set the id of a widget by accessing its Element
@@ -61,7 +87,7 @@ public class App implements EntryPoint {
     final HTML serverResponseLabel = new HTML();
     VerticalPanel dialogVPanel = new VerticalPanel();
     dialogVPanel.addStyleName("dialogVPanel");
-    dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
+    dialogVPanel.add(new HTML("<b>Dialog Box</b>"));
     dialogVPanel.add(textToServerLabel);
     dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
     dialogVPanel.add(serverResponseLabel);
@@ -84,7 +110,7 @@ public class App implements EntryPoint {
        * Fired when the user clicks on the sendButton.
        */
       public void onClick(ClickEvent event) {
-        sendNameToServer();
+        showDialog();
       }
 
       /**
@@ -92,15 +118,20 @@ public class App implements EntryPoint {
        */
       public void onKeyUp(KeyUpEvent event) {
         if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-          sendNameToServer();
+          showDialog();
         }
       }
 
       /**
        * Send the name from the nameField to the server and wait for a response.
        */
-      private void sendNameToServer() {
-          dialogBox.setText("Not connected to a server");
+      private void showDialog() {
+         println("in showDialog with ctx " + ctx);
+         println("ctx println");
+         println("ctx get name " + ctx.get("name"));
+         println("ctx get String.class " + ctx.create(String.class.getName()));
+         dialogBox.setText("got name " + ctx.get("name") + " and supplied value " +
+              ctx.get(String.class.getName()) + " from Adligo's ctx.");
           serverResponseLabel.addStyleName("serverResponseLabelError");
           dialogBox.center();
           closeButton.setFocus(true);
