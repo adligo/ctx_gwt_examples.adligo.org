@@ -129,9 +129,9 @@ public class App implements EntryPoint {
          println("in showDialog with ctx " + ctx);
          println("ctx println");
          println("ctx get name " + ctx.get("name"));
-         println("ctx get String.class " + ctx.create(String.class.getName()));
+         println("ctx get String.class " + ctx.create(String.class));
          dialogBox.setText("got name " + ctx.get("name") + " and supplied value " +
-              ctx.get(String.class.getName()) + " from Adligo's ctx.");
+              ctx.get(String.class) + " from Adligo's ctx.");
           serverResponseLabel.addStyleName("serverResponseLabelError");
           dialogBox.center();
           closeButton.setFocus(true);
