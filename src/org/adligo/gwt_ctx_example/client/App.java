@@ -1,12 +1,10 @@
 package org.adligo.gwt_ctx_example.client;
 
-import java.util.function.Supplier;
-
-import org.adligo.ctx.shared.Ctx;
+import org.adligo.ctx.shared.AbstractCtx;
 import org.adligo.ctx.shared.CtxMutant;
+import org.adligo.ctx.shared.CtxParams;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -31,7 +29,7 @@ public class App implements EntryPoint {
   private static final String SERVER_ERROR = "An error occurred while "
       + "attempting to contact the server. Please check your network "
       + "connection and try again.";
-  private final Ctx ctx;
+  private final AbstractCtx ctx;
 
   native void println( String message) /*-{
   console.log( "me:" + message );
@@ -39,17 +37,17 @@ public class App implements EntryPoint {
   
   public App() {
     println("In App()");
-    CtxMutant cm = new CtxMutant();
-    cm.add("name", "App");
+    CtxParams cm = new CtxParams();
+    cm.set("name", "App");
 
-    cm.addCreator(String.class.getName(),
+    cm.setCreator(String.class.getName(),
       //lambda's work fine in GWT now cool, first time I have checked,
       // however the complier will cast them to Object, on occasion, which
       // gets weird
       () -> { return "Supplier Check!"; });
         
 
-    ctx = new Ctx(cm);
+    ctx = new CtxMutant(cm);
     System.out.println("Exit App()");
   }
   /**
